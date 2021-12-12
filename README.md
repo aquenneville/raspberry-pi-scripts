@@ -1,9 +1,8 @@
 # raspberry-pi-scripts
 Raspberry pi related
 
-= Magic Mirror setup on a Raspberri pi zero =<br>
-Inspiration<br>
-http://emmanuelcontreras.com/how-to/how-to-create-a-magic-mirror-2-with-pi-zero-w/<br>
+= Magic Mirror setup on a Raspberri pi zero w =<br>
+Inspiration: http://emmanuelcontreras.com/how-to/how-to-create-a-magic-mirror-2-with-pi-zero-w/<br>
 
 Equipment
 - Raspberri pi zero w
@@ -117,6 +116,8 @@ $ sudo pm2 save<br>
 
 if node doesn't want to start in package.json replace start command with...<br>
 "start": "node_modules/.bin/electron js/electron.js",<br>
+
+Upon reboot, wait 5 minutes before it loads.. 
 
 --- 
 PM2 commands<br>
