@@ -1,9 +1,9 @@
 # raspberry-pi-scripts
 Raspberry pi related
 
-= Magic Mirror setup on a Raspberri pi zero = 
-Inspiration
-http://emmanuelcontreras.com/how-to/how-to-create-a-magic-mirror-2-with-pi-zero-w/
+= Magic Mirror setup on a Raspberri pi zero =<br>
+Inspiration<br>
+http://emmanuelcontreras.com/how-to/how-to-create-a-magic-mirror-2-with-pi-zero-w/<br>
 
 Equipment
 - Raspberri pi zero w
@@ -12,112 +12,112 @@ Equipment
 - Hdmi Monitor or tv
 
 Setup 
-- Install Rasbian Full Version with Raspberri Pi Imager
+- Install Rasbian Full Version with Raspberri Pi Imager<br>
 https://downloads.raspberrypi.org/imager/imager_latest.dmg
 
 - Format sd card and install the full Raspbian OS 
 
-- Raspberry configuration: sudo raspi-config
-+Interfacing Options / Enable SSH
-+AutoLogin to raspberry pi
-   Boot Options -> B1 Desktop/CLI -> B2 Console Autologin // we want to get the console
+- Raspberry configuration: sudo raspi-config<br>
++Interfacing Options / Enable SSH<br>
++AutoLogin to raspberry pi<br>
+   Boot Options -> B1 Desktop/CLI -> B2 Console Autologin // we want to get the console<br>
 
-- Setting up WiFi
-sudo vi /etc/wpa_supplicant/wpa_supplicant.config
-network={
-ssid=”Your_wifi_name”
-psk=“Your_wifi_password”
-}
+- Setting up WiFi<br>
+sudo vi /etc/wpa_supplicant/wpa_supplicant.config<br>
+network={<br>
+ssid=”Your_wifi_name”<br>
+psk=“Your_wifi_password”<br>
+}<br>
 
-Create the folders for the source code
-mkdir -p /Development/source 
-export HOME="/Development/source"
+- Create the folders for the source code<br>
+mkdir -p /Development/source<br>
+export HOME="/Development/source"<br>
 
-Install git
-sudo apt install git
+- Install git<br>
+sudo apt install git<br>
 
-Install node v16.2.0
-wget https://unofficial-builds.nodejs.org/download/release/v16.2.0/node-v16.2.0-linux-armv61.tar.gz .
-tar xvf above file
-cd above file
-cp -R * /usr/local
+- Install node v16.2.0<br>
+wget https://unofficial-builds.nodejs.org/download/release/v16.2.0/node-v16.2.0-linux-armv61.tar.gz .<br>
+tar xvf above file<br>
+cd above file<br>
+cp -R * /usr/local<br>
 
-Install npm 8.2.0
-sudo apt install npm 
-npm install -g npm@8.2.0 // if it isn't the right version
+- Install npm 8.2.0<br>
+sudo apt install npm<br> 
+npm install -g npm@8.2.0 // if it isn't the right version<br>
 
-Install midori browser // chromium-browser would not work on armv6l
-sudo apt install midori
-https://manpages.debian.org/stretch/midori/midori.1
+- Install midori browser // chromium-browser would not work on armv6l<br>
+sudo apt install midori<br>
+https://manpages.debian.org/stretch/midori/midori.1<br>
 
-Install MagicMirror
-cd $HOME
-git clone https://github.com/MichMich/MagicMirror
-npm install -arch=armv7l
+- Install MagicMirror<br>
+cd $HOME<br>
+git clone https://github.com/MichMich/MagicMirror<br>
+npm install -arch=armv7l<br>
 
-AutoLogin to raspberry pi
-sudo raspi-config
- Boot Options -> B1 Desktop/CLI -> B2 Console Autologin
-Install xinit (program that allows you to start “x” server)
+- AutoLogin to raspberry pi<br>
+sudo raspi-config<br>
+ Boot Options -> B1 Desktop/CLI -> B2 Console Autologin<br>
 
-sudo apt-get install xinit
+- Install xinit (program that allows you to start “x” server)<br>
+sudo apt-get install xinit<br>
 
-Install Xorg (display server)
-sudo apt install xorg
+- Install Xorg (display server)<br>
+sudo apt install xorg<br>
 
-Install matchbox (window manager)
-sudo apt install matchbox
+- Install matchbox (window manager)<br>
+sudo apt install matchbox<br>
 
-Get rid of cursor with Unclutter
-sudo apt install unclutter
+- Get rid of cursor with Unclutter<br>
+sudo apt install unclutter<br>
 
-Make two script files in $HOME
-1. mm_start.sh 
-#!/bin/bash
-cd /Development/source/MagicMirror
-node serveronly &
-sleep 30
-xinit /home/pi/midori_start.sh
+- Make two script files in $HOME<br>
+1. mm_start.sh <br>
+#!/bin/bash<br>
+cd /Development/source/MagicMirror<br>
+node serveronly &<br>
+sleep 30<br>
+xinit /home/pi/midori_start.sh<br>
 
-2. midori_start.sh
-#!/bin/sh
-#unclutter &
-xset -dpms # disable DPMS (Energy Star) features.
-xset s off # disable screen saver
-xset s noblank # don’t blank the video device
-matchbox-window-manager &
-midori -a http://localhost:8080 -e Fullscreen
-while :
-do  
-    sleep 120;
-    echo "Reload midori"
-    midori -e Reload
-done 
+2. midori_start.sh<br>
+#!/bin/sh<br>
+#unclutter &<br>
+xset -dpms # disable DPMS (Energy Star) features.<br>
+xset s off # disable screen saver<br>
+xset s noblank # don’t blank the video device<br>
+matchbox-window-manager &<br>
+midori -a http://localhost:8080 -e Fullscreen<br>
+while :<br>
+do  <br>
+    sleep 120;<br>
+    echo "Reload midori"<br>
+    midori -e Reload<br>
+done <br>
 
-Make both files executable
-$ sudo chmod a+x mm_start.sh
-$ sudo chmod a+x midori_start.sh
+- Make both files executable<br>
+$ sudo chmod a+x mm_start.sh<br>
+$ sudo chmod a+x midori_start.sh<br>
 
-Auto Starting MagicMirror (I followed the guide on the MM github page) 
+- Auto Starting MagicMirror (I followed the guide on the MM github page)<br> 
+<br>
+Before doing this, make sure any user can launch an Xorg process(IhadtodothisSinceISSHintoThePi)<br>
+Change the value of “allowed_users=console” to “allowed_users=anybody” in /etc/X11/Xwrapper.config.<br>
+Create the file and add key value pair inside. <br>
 
-Before doing this, make sure any user can launch an Xorg process(IhadtodothisSinceISSHintoThePi)
-Change the value of “allowed_users=console” to “allowed_users=anybody” in /etc/X11/Xwrapper.config.
-Create the file and add key value pair inside. 
+- Install pm2 and start it<br>
+$ sudo npm install -g pm2<br>
+$ pm2 startup<br>
 
-Install pm2 and start it
-$ sudo npm install -g pm2
-$ pm2 startup
+- Copy and paste the command that the screen prints out, otherwise the pm2 process won’t save<br>
+Note: Latest version of pm2 didn’t provide this link below but you need to run it or pm2 will not save or start automatically on reboot<br>
+$ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u pi –hp /home/pi<br>
+$ sudo pm2 start mm_start.sh<br>
+magic mirror should start running in chromium<br>
+$ sudo pm2 save<br>
 
-Copy and paste the command that the screen prints out, otherwise the pm2 process won’t save
-Note: Latest version of pm2 didn’t provide this link below but you need to run it or pm2 will not save or start automatically on reboot
-$ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u pi –hp /home/pi
-$ sudo pm2 start mm_start.sh
-magic mirror should start running in chromium
-$ sudo pm2 save
-
-if node doesn't want to start in package.json replace start command with...
-"start": "node_modules/.bin/electron js/electron.js",
+if node doesn't want to start in package.json replace start command with...<br>
+"start": "node_modules/.bin/electron js/electron.js",<br>
 
 --- 
-PM2 commands
-sudo pm2 restart mm_start
+PM2 commands<br>
+sudo pm2 restart mm_start<br>
