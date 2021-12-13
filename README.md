@@ -123,3 +123,8 @@ Upon reboot, wait 5 minutes before it loads..
 Useful commands<br>
 sudo pm2 restart mm_start<br>
 npm run config:check<br>
+
+--- 
+Modules
+git clone --branch forRPI1 https://github.com/eouia/MMM-CalendarExt.git
+
