@@ -120,5 +120,6 @@ if node doesn't want to start in package.json replace start command with...<br>
 Upon reboot, wait 5 minutes before it loads.. 
 
 --- 
-PM2 commands<br>
+Useful commands<br>
 sudo pm2 restart mm_start<br>
+npm run config:check<br>
